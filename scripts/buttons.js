@@ -1,5 +1,7 @@
-const _ = require('lodash');
-const Color = require('color');
+import _ from 'lodash';
+// import Color from 'color';
+import Color from 'colorjs.io';
+
 
 /* Creates default button */
 const createDefault = options => {
@@ -38,11 +40,11 @@ const createSolid = (colorConfig, options) => {
                 opacity: _.get(properties, 'opacity', '1'),
                 pointerEvents: _.get(properties, 'pointerEvents', 'auto'),
                 '&:hover': {
-                    backgroundColor: _.get(properties, 'hoverBackground', new Color(properties.background).darken(0.1).hex().toString()),
+                    backgroundColor: _.get(properties, 'hoverBackground', new Color(properties.background || "rgb(0,0,0,1)").darken(0.1).toString({format: "hex"})),
                     color: _.get(properties, 'hoverText', properties.text)
                 },
                 '&:active': {
-                    backgroundColor: _.get(properties, 'activeBackground', new Color(properties.background).darken(0.1).hex().toString()),
+                    backgroundColor: _.get(properties, 'activeBackground', new Color (properties.background || "rgb(0,0,0,1)").darken(0.1).toString({format: "hex"})),
                     color: _.get(properties, 'activeText', properties.text)
                 }
             }
@@ -78,12 +80,12 @@ const createOutlined = (colorConfig, options) => {
             [`${options.baseClass}-outlined-${key}`]: {
                 ...buttonProperties,
                 '&:hover': {
-                    borderColor: _.get(properties, 'hoverBorderColor', new Color(properties.background).darken(0.2).hex().toString()),
+                    borderColor: _.get(properties, 'hoverBorderColor', new Color (properties.background || "rgb(0,0,0,1)").darken(0.2).toString({format: "hex"})),
                     borderWidth: _.get(properties, 'hoverBorderWidth', options.borderWidth),
                     color: _.get(properties, 'hoverText', textColor)
                 },
                 '&:active': {
-                    borderColor: _.get(properties, 'activeBorderColor', new Color(properties.background).darken(0.2).hex().toString()),
+                    borderColor: _.get(properties, 'activeBorderColor', new Color (properties.background || "rgb(0,0,0,1)").darken(0.2).toString({format: "hex"})),
                     borderWidth: _.get(properties, 'activeBorderWidth', options.borderWidth),
                     color: _.get(properties, 'activeText', textColor)
                 }
@@ -127,9 +129,9 @@ function createGradient(colorConfig, options) {
 
         let [key, properties] = config;
 
-        let dark = new Color(properties.background).darken(0.2).hex().toString();
+        let dark = new Color (properties.background || "rgb(0,0,0,1)").darken(0.2).toString({format: "hex"});
 
-        let light = new Color(properties.background).lighten(0.1).hex().toString();
+        let light = new Color (properties.background || "rgb(0,0,0,1)").lighten(0.1).toString({format: "hex"});
 
         Object.assign(buttonStyles, {
             [`${options.baseClass}-gradient-${key}`]: {
@@ -166,7 +168,8 @@ function createSizes(options) {
     return buttonSizes;
 }
 
-module.exports = {
+/* Export all functions as named exports */
+export {
     createDefault,
     createSolid,
     createOutlined,

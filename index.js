@@ -1,7 +1,6 @@
-const _ = require('lodash');
-const Color = require('color');
-const buttons = require('./scripts/buttons');
-const defaultOptions = require('./scripts/defaultOptions');
+import _ from 'lodash';
+import * as buttons from './scripts/buttons.js';
+import defaultOptions from './scripts/defaultOptions.js';
 
 /* Sets a color config object from the options */
 function setColorConfig(options) {
@@ -37,18 +36,15 @@ function combineStyles(colorConfig, options, custom) {
     }
 }
 
-module.exports = function(options, custom) {
-
+/* Convert to default export using arrow function */
+export default (options, custom) => {
     options = _.isFunction(options) ? defaultOptions() : _.defaultsDeep(options, defaultOptions());
 
     const colorConfig = setColorConfig(options);
-
     const buttonStyles = combineStyles(colorConfig, options, custom);
-
     const buttonSizes = buttons.createSizes(options);
     
     return function({ addComponents }) {
-
         addComponents([
             buttonStyles,
             buttonSizes

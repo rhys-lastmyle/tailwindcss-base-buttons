@@ -1,6 +1,6 @@
-const _ = require('lodash');
+import _ from 'lodash';
+import colors from 'tailwindcss/colors';
 
-const colors = require('tailwindcss/colors')
 const defaultColors = _.omit(colors, [
     'transparent',
     'current'
@@ -67,7 +67,8 @@ function setDefaultThemeColors() {
     }
 }
 
-module.exports = function() {
+/* Convert to default export using arrow function */
+export default () => {
     return {
         baseClass: '.btn',
         borderRadius: '.25rem',
